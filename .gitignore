@@ -1,0 +1,23 @@
+# Environment
+.env
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Data files
+data/
+
+# Logs
+logs/
+
+# pytest
+.pytest_cache/
+.coverage
+
+# VS Code
+.vscode/
+
+# uv
+.python-version
+uv.lock
