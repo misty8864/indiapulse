@@ -18,7 +18,8 @@ services:
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-      _PIP_ADDITIONAL_REQUIREMENTS: "psycopg2-binary sqlalchemy"
+      AIRFLOW__WEBSERVER__SECRET_KEY: "indiapulse_secret"
+      _PIP_ADDITIONAL_REQUIREMENTS: "psycopg2-binary sqlalchemy loguru pandas python-dotenv"
     command: bash -c "airflow db init"
 
   airflow-webserver:
@@ -29,11 +30,15 @@ services:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__WEBSERVER__SECRET_KEY: "indiapulse_secret"
       _PIP_ADDITIONAL_REQUIREMENTS: "psycopg2-binary sqlalchemy"
+      
     ports:
       - "8080:8080"
     volumes:
       - ./nse_dag.py:/opt/airflow/dags/nse_dag.py
+      - ../data:/opt/airflow/data
+      - C:\Users\SBDiv\indiapulse\src:/opt/airflow/src
     command: airflow webserver
 
   airflow-scheduler:
@@ -44,9 +49,13 @@ services:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__WEBSERVER__SECRET_KEY: "indiapulse_secret"
       _PIP_ADDITIONAL_REQUIREMENTS: "psycopg2-binary sqlalchemy"
+      PYTHONPATH: /opt/airflow/src
     volumes:
       - ./nse_dag.py:/opt/airflow/dags/nse_dag.py
+      - ../data:/opt/airflow/data
+      - C:\Users\SBDiv\indiapulse\src:/opt/airflow/src
     command: airflow scheduler
 
 volumes:

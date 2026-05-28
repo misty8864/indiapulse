@@ -1,13 +1,12 @@
 from loguru import logger
+import argparse
 
 from indiapulse.db.connection import engine
 from indiapulse.db.load import create_table, insert_data
 from indiapulse.processing.transform import load_data
 
 
-def main():
-    path = "data/nse_temp/BhavCopy_NSE_CM_0_0_0_20241114_F_0000.csv"
-
+def main(path: str):
     logger.info("Starting IndiaPulse pipeline...")
 
     create_table(engine)
@@ -20,4 +19,14 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--path",
+        required=True,
+        help="Path to NSE bhavcopy CSV file"
+    )
+
+    args = parser.parse_args()
+
+    main(args.path)
