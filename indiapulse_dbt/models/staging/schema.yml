@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: stg_nse_daily
+    description: "Cleaned NSE bhavcopy data with derived columns"
+    columns:
+      - name: trade_date
+        description: "Trading date"
+        tests:
+          - not_null
+      - name: ticker_symbol
+        description: "NSE ticker"
+        tests:
+          - not_null
+      - name: close_price
+        description: "Closing price"
+        tests:
+          - not_null
+      - name: return_direction
+        description: "Positive/negative/neutral"
+        tests:
+          - accepted_values:
+              values: ['positive', 'negative', 'neutral']
+              

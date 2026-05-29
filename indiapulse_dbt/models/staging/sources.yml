@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: raw
+    database: indiapulse
+    schema: public
+    tables:
+      - name: nse_bhavcopy
+        description: "Raw NSE bhavcopy data ingested daily"
+        columns:
+          - name: trade_date
+            description: "Date of trading"
+          - name: ticker_symbol
+            description: "NSE ticker symbol"
+          - name: sector
+            description: "Market sector"
+          - name: close_price
+            description: "Closing price"
+          - name: daily_return
+            description: "Daily return percentage"
